@@ -87,7 +87,7 @@ Behaviour that is worth calling out:
 The three builds differ in how they store orders, store price levels, find the
 best price, and locate an order for cancellation.
 
-### A — ordered map (`book_map.hpp`)
+### A: ordered map (`book_map.hpp`)
 
 - Price levels: two `std::map` keyed by tick, bids high-to-low and asks
   low-to-high, each mapping tick to total quantity.
@@ -95,7 +95,7 @@ best price, and locate an order for cancellation.
 - Best price: `begin()` of the map.
 - Cancel: hash lookup by id, then one tree update (erase the level if it empties).
 
-### B — binary heaps with lazy deletion (`book_heap.hpp`)
+### B: binary heaps with lazy deletion (`book_heap.hpp`)
 
 - Price levels: a max-heap of bid ticks and a min-heap of ask ticks give the best
   price; the quantity per level lives in a separate `std::unordered_map`.
@@ -106,7 +106,7 @@ best price, and locate an order for cancellation.
   in the heap to be cleaned up later. A tick is only pushed when a level goes
   from empty to non-empty, which keeps the heaps near the number of live levels.
 
-### C — flat price arrays, my own design (`book_array.hpp`)
+### C: flat price arrays, my own design (`book_array.hpp`)
 
 - Price levels: one flat array per side, indexed directly by tick, holding the
   total quantity. No tree, no heap, no pointer chasing.
